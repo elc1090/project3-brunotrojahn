@@ -11,7 +11,9 @@ const filesToCache = [
     '/pages/visita.html',
     '/pages/visitas.html',
     '/main.css',
-    '/icon.jpg'
+    '/icon.jpg',
+    '/js/router.js',
+    '/service-worker.js'
 ];
 
 // Instalação do Service Worker e armazenamento em cache dos arquivos

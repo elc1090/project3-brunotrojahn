@@ -2,8 +2,11 @@
 function showPage(pageId) {
     // Obtém o arquivo HTML da página específica
     const pageUrl = `pages/${pageId}.html`;
-    fetch(pageUrl)
-        .then(response => response.text())
+
+    const response = caches.match(pageUrl)
+        .then(response => response || fetch(pageUrl))
+
+    response.then(response => response.text())
         .then(html => {
             // Insere o conteúdo no elemento #content
             const contentElement = document.getElementById('content');
@@ -18,8 +21,7 @@ function showPage(pageId) {
                 scriptElement.textContent = script.innerHTML;
                 contentElement.appendChild(scriptElement);
             });
-        })
-        .catch(error => {
+        }).catch(error => {
             console.error('Erro ao carregar a página:', error);
         });
 }
@@ -40,8 +42,6 @@ function handleNavigation(event) {
     // Atualiza a URL
     window.location.hash = route;
 
-    // Exibe a página correspondente
-    showPage(route);
     var mobileMenu = document.querySelector(".mobile-menu");
     if (!isHidden(mobileMenu))
        mobileMenu.classList.toggle("hidden");
